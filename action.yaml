@@ -28,13 +28,15 @@ runs:
   using: 'docker'
   image: 'ghcr.io/coincover/coincover-amt:latest'
   args:
-    - >
-      docker run
-      -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-      -e USER_NAME=${{ github.actor }}
-      -v "$(pwd)":/app
-      "ghcr.io/${{ github.repository }}:latest"
-      --env "${{ inputs.env }}"
-      --type "${{ inputs.test_type }}"
-      --product "${{ inputs.product }}"
+    - bash
+    - -c
+    - |
+      docker run \
+      -e GITHUB_TOKEN=${GITHUB_TOKEN} \
+      -e USER_NAME=${GITHUB_ACTOR} \
+      -v "$(pwd)":/app \
+      "ghcr.io/${GITHUB_REPOSITORY}:latest" \
+      --env "${{ inputs.env }}" \
+      --type "${{ inputs.test_type }}" \
+      --product "${{ inputs.product }}" \
       --file demo
