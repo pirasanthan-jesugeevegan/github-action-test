@@ -11,7 +11,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package.json package-lock.json /app/
 
 # Get the needed libraries to run Playwright
 RUN apt-get update && apt-get -y install libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libatspi2.0-0 libxshmfence-dev
@@ -19,7 +19,11 @@ RUN apt-get update && apt-get -y install libnss3 libatk-bridge2.0-0 libdrm-dev l
 # Install the dependencies in Node environment
 RUN npm install
 # Copy the rest of the application code
-COPY . .
+
+# Run the Playwright install command to download browsers
+RUN npx playwright install
+
+COPY . /app
 
 # change permission to execute the script
 RUN chmod +x /app/scripts/entrypoint.sh
