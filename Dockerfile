@@ -21,7 +21,7 @@ RUN npm install
 # Copy the rest of the application code
 
 # Run the Playwright install command to download browsers
-RUN npx playwright install
+RUN npx playwright test
 
 COPY . /app
 
