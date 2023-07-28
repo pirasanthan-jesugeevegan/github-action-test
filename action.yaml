@@ -1,5 +1,8 @@
 name: 'Test Playwright Github Action'
 description: 'Call an API and get the result'
+branding:
+  icon: 'award'
+  color: 'green'
 inputs:
   env:
     description: 'number of the pokemon in the pokedex'
