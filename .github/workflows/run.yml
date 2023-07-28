@@ -9,5 +9,6 @@ jobs:
         uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
           env: 'dev'
+          token: ${{ secrets.GITHUB_TOKEN }}
           type: 'api'
           product: 'demo'

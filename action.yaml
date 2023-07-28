@@ -5,8 +5,15 @@ inputs:
     description: 'number of the pokemon in the pokedex'
     required: true
     default: "dev"
+  token:
+    description: 'number of the pokemon in the pokedex'
+    required: true
+    default: "dev"
 runs:
-  pre: 'docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}'
+  using: "composite"
+  steps:
+    - name: Docker Login to GitHub Container Registry
+      run: 'docker login ghcr.io -u pirasanthan-jesugeevegan -p token'
   using: 'docker'
   image: 'Dockerfile'
   args:
