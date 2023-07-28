@@ -1,19 +1,40 @@
-name: 'Test Playwright Github Action'
-description: 'Call an API and get the result'
-branding:
-  icon: 'award'
-  color: 'green'
+name: 'Automation Tests'
+description: 'Run Automation Tests, Generate Report & Upload to S3'
 inputs:
   env:
-    description: 'number of the pokemon in the pokedex'
+    description: 'Select the Environment to run test against'
     required: true
-    default: "dev"
+    default: 'dev'
+    options:
+      - 'dev'
+      - 'stage'
+  test_type:
+    description: 'Select the type of test to run'
+    required: true
+    default: 'ui'
+    options:
+      - 'ui'
+      - 'api'
+      - 'pt'
+  product:
+    description: 'Select different product (demo and test) for testing purposes'
+    required: true
+    default: 'demo'
+    options:
+      - 'demo'
+      - 'Disaster_Recovery'
+      - 'Transaction_Protection'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'ghcr.io/coincover/coincover-amt:latest'
   args:
-    - bash
-    - -c
-    - |
-      npm install
-      ./entrypoint.sh --env ${{ inputs.env }}
+    - >
+      docker run
+      -e GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+      -e USER_NAME=${{ github.actor }}
+      -v "$(pwd)":/app
+      "ghcr.io/${{ github.repository }}:latest"
+      --env "${{ inputs.env }}"
+      --type "${{ inputs.test_type }}"
+      --product "${{ inputs.product }}"
+      --file demo
