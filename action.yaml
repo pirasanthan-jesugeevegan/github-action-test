@@ -7,6 +7,6 @@ inputs:
     default: "dev"
 runs:
   using: 'docker'
-  image: 'ghcr.io/coincover/coincover-amt:latest'
+  image: 'Dockerfile'
   args:
     - --env ${{ inputs.env}}
