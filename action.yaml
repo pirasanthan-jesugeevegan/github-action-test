@@ -11,10 +11,12 @@ inputs:
     default: "dev"
 runs:
   using: 'docker'
+  shell: bash
   steps:
     - name: Docker Login to GitHub Container Registry
-      run: 'docker login ghcr.io -u pirasanthan-jesugeevegan -p token'
-  image: 'Dockerfile'
-  args:
-    - "--env"
-    - "${{ inputs.env }}"
+      run: |
+        docker login ghcr.io -u pirasanthan-jesugeevegan -p ${{ inputs.token }}
+    - name: Run E2E Tests with Docker
+      run: |
+        docker build -t ghcr.io/pirasanthan-jesugeevegan/github-action-test:${{ inputs.env }} .
+        docker run ghcr.io/pirasanthan-jesugeevegan/github-action-test:${{ inputs.env }} --env ${{ inputs.env }}
