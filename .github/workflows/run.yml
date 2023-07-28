@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     name: RUN TESTING
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: RUN TEST
         uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
