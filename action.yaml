@@ -12,9 +12,6 @@ inputs:
 runs:
   using: 'docker'
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
     - name: Docker Login to GitHub Container Registry
       run: |
         docker login ghcr.io -u pirasanthan-jesugeevegan -p ${{ inputs.token }}
