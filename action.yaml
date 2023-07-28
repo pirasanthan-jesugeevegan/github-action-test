@@ -1,4 +1,4 @@
-name: 'Blog Custom Github Action'
+name: 'Test Playwright Github Action'
 description: 'Call an API and get the result'
 inputs:
   env:
