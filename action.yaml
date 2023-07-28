@@ -1,0 +1,12 @@
+name: 'Blog Custom Github Action'
+description: 'Call an API and get the result'
+inputs:
+  env:
+    description: 'number of the pokemon in the pokedex'
+    required: true
+    default: "dev"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - --env ${{ inputs.env}}

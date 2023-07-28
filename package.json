@@ -1,0 +1,21 @@
+{
+  "name": "untitled-folder-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pirasanthan-jesugeevegan/github-action-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pirasanthan-jesugeevegan/github-action-test/issues"
+  },
+  "homepage": "https://github.com/pirasanthan-jesugeevegan/github-action-test#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.36.2"
+  }
+}
