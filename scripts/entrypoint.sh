@@ -33,7 +33,10 @@ set -e
 #     shift
 # done
 
+env_arg="$1"
 
+# Display the value of the --env argument
+echo "Environment: $env_arg"
 
 # Display the values of the parameters
 echo "Env: $env"
