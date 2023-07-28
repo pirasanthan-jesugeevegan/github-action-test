@@ -2,20 +2,15 @@ name: 'Run E2E Tests'
 description: 'Run e2e test with reporting'
 inputs:
   env:
-    description: 'number of the pokemon in the pokedex'
+    description: 'env to run tests'
     required: true
-    default: "dev"
-  token:
-    description: 'number of the pokemon in the pokedex'
+    default: 'dev'
+  username:
+    description: 'Username used to log against the Docker registry'
     required: true
-    default: "dev"
+  password:
+    description: 'Password or personal access token used to log against the Docker registry'
+    required: true
 runs:
-  shell: bash
-  steps:
-    - name: Docker Login to GitHub Container Registry
-      run: |
-        docker login ghcr.io -u pirasanthan-jesugeevegan -p ${{ inputs.token }}
-    - name: Run E2E Tests with Docker
-      run: |
-        docker build -t ghcr.io/pirasanthan-jesugeevegan/github-action-test:${{ inputs.env }} .
-        docker run ghcr.io/pirasanthan-jesugeevegan/github-action-test:${{ inputs.env }} --env ${{ inputs.env }}
+  using: 'node16'
+  main: 'index.js'

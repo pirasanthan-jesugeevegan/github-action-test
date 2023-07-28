@@ -8,7 +8,6 @@ jobs:
       - name: RUN TEST
         uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
-          env: 'dev'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          type: 'api'
-          product: 'demo'
+          env: '-- env dev --type api --product demo'
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
