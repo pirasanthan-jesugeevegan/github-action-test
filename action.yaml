@@ -6,10 +6,9 @@ inputs:
     required: true
     default: "dev"
 runs:
+  pre: 'docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}'
   using: 'docker'
   image: 'Dockerfile'
   args:
     - "--env"
     - "${{ inputs.env }}"
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
