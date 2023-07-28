@@ -11,5 +11,9 @@ inputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args: >
-    bash -c 'npm install && ./entrypoint.sh --env ${{ inputs.env }}'
+  args:
+    - bash
+    - -c
+    - |
+      npm install
+      ./entrypoint.sh --env ${{ inputs.env }}
