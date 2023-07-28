@@ -6,7 +6,7 @@ jobs:
     name: RUN TESTING
     steps:
       - name: RUN TEST
-        uses: pirasanthan-jesugeevegan/github-action-test@latest
+        uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
           env: "dev"
         
