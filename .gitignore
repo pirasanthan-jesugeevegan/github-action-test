@@ -3,6 +3,3 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 portfolio/
-/test-results/
-/playwright-report/
-/playwright/.cache/
