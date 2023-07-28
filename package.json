@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "fsevents": "^2.3.2",
+    "playwright-core": "^1.36.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.36.2"
+  },
   "scripts": {},
   "repository": {
     "type": "git",
@@ -14,8 +21,5 @@
   "bugs": {
     "url": "https://github.com/pirasanthan-jesugeevegan/github-action-test/issues"
   },
-  "homepage": "https://github.com/pirasanthan-jesugeevegan/github-action-test#readme",
-  "devDependencies": {
-    "@playwright/test": "^1.36.2"
-  }
+  "homepage": "https://github.com/pirasanthan-jesugeevegan/github-action-test#readme"
 }

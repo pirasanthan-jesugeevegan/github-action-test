@@ -54,5 +54,5 @@ done
 # Display the values of the parameters
 echo "Env: $env"
 echo "npx playwright test --project=$env"
-npm install -D @playwright/test
-npx playwright test --project=$env
+npm install
+npx playwright test --config=playwright.config.ts --project=$env

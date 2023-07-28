@@ -8,4 +8,6 @@ jobs:
       - name: RUN TEST
         uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
-          env: "dev"
+          env: 'dev'
+          type: 'api'
+          product: 'demo'
