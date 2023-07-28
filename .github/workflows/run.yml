@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     name: RUN TESTING
     steps:
+      - name: Docker Login to GitHub Container Registry
+        run: docker login ghcr.io -u USERNAME -p ${{ secrets.GITHUB_TOKEN }}
       - name: RUN TEST
         uses: pirasanthan-jesugeevegan/github-action-test@master
         with:
