@@ -10,7 +10,7 @@ inputs:
     required: true
     default: "dev"
 runs:
-  using: 'docker'
+  shell: bash
   steps:
     - name: Docker Login to GitHub Container Registry
       run: |
