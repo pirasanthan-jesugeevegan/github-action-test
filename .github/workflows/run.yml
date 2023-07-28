@@ -6,7 +6,7 @@ jobs:
     name: RUN TESTING
     steps:
       - name: RUN TEST
-        uses: action.yaml
+        uses: pirasanthan-jesugeevegan/github-action-test@v2
         with:
           env: "dev"
-    
+        
