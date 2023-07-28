@@ -12,4 +12,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args: >
-    bash -c "npm install && ./entrypoint.sh --env ${{ inputs.env }}"
+    bash -c 'npm install && ./entrypoint.sh --env ${{ inputs.env }}'
