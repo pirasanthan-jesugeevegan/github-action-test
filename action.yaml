@@ -10,11 +10,10 @@ inputs:
     required: true
     default: "dev"
 runs:
-  using: "composite"
+  using: 'docker'
   steps:
     - name: Docker Login to GitHub Container Registry
       run: 'docker login ghcr.io -u pirasanthan-jesugeevegan -p token'
-  using: 'docker'
   image: 'Dockerfile'
   args:
     - "--env"
