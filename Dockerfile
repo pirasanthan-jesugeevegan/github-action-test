@@ -1,30 +1,27 @@
-# Get the base image of Node version 16
-FROM node:16
+FROM ghcr.io/coincover/coincover-amt:base
 
-# Get the latest version of Playwright
-FROM mcr.microsoft.com/playwright:focal
-
-# Set up a working directory
+# Set the working directory
 WORKDIR /app
 
-# Set the environment path to node_modules/.bin
-ENV PATH /app/node_modules/.bin:$PATH
-
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json to the Docker image
 COPY package.json package-lock.json /app/
 
-# Get the needed libraries to run Playwright
-RUN apt-get update && apt-get -y install libnss3 libatk-bridge2.0-0 libdrm-dev libxkbcommon-dev libgbm-dev libasound-dev libatspi2.0-0 libxshmfence-dev
+RUN JAVA_HOME="$(dirname $(dirname $(readlink -f $(which javac))))" && \
+    echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile.d/java.sh && \
+    echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> /etc/profile.d/java.sh && \
+    chmod +x /etc/profile.d/java.sh
 
-# Install the dependencies in Node environment
+# Reload the environment variables
+RUN . /etc/profile.d/java.sh
+
 RUN npm install
-# Copy the rest of the application code
 
 # Run the Playwright install command to download browsers
 RUN npx playwright install
 
+# Copy everything from the local directory to the Docker image
 COPY . /app
 
-# change permission to execute the script
+# Set executable permissions for the entrypoint.sh script
 RUN chmod +x /app/scripts/entrypoint.sh
 ENTRYPOINT ["/app/scripts/entrypoint.sh"]

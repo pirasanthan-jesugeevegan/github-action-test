@@ -2,35 +2,14 @@ name: 'Run E2E Tests'
 description: 'Run e2e test with reporting'
 inputs:
   env:
-    description: 'What environment you want to run the test on'
+    description: 'number of the pokemon in the pokedex'
     required: true
-    default: 'dev'
-  type:
-    description: 'Type of test to run'
-    required: true
-    default: 'api'
-  product:
-    description: 'Test are tagged, you can run tagged test'
-    required: true
-    default: 'demo'
-  file:
-    description: 'File to run Performance test'
-    default: 'demo'
+    default: "dev"
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  steps:
-    - name: Log in to GitHub Container Registry
-      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-
-    - name: Set the Docker image in the environment variable
-      run: echo "DOCKER_IMAGE=ghcr.io/coincover/coincover-amt:latest" >> $GITHUB_ENV
   args:
-    - '--env'
-    - '${{ inputs.env }}'
-    - '--type'
-    - '${{ inputs.type }}'
-    - '--product'
-    - '${{ inputs.product }}'
-    - '--file'
-    - '${{ inputs.file }}'
+    - "--env"
+    - "${{ inputs.env }}"
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
