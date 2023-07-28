@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+echo "Environment: $1"
+
 usage()
 {
     echo "entrypoint.sh:  this script runs cypress, generate a test report and upload it to S3."
