@@ -1,21 +1,50 @@
 const axios = require('axios');
 const env = process.env.INPUT_ENV || 'dev';
-const ghcrUsername = process.env.INPUT_USERNAME || 'pirasanthan-jesugeevegan';
-const ghcrToken =
-  process.env.INPUT_PASSWORD || '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';
+const ghcrUsername = process.env.INPUT_USERNAME || '';
+const ghcrPassword = process.env.INPUT_PASSWORD || '';
 
 async function run() {
   try {
-    if (!ghcrUsername || !ghcrToken) {
+    if (!ghcrUsername || !ghcrPassword) {
       console.error(
         'Error: GitHub Container Registry credentials are missing.'
       );
       return;
     }
 
-    await runDockerImage(env, ghcrToken);
+    const ghcrToken = await getGhcrToken(ghcrUsername, ghcrPassword);
+    if (ghcrToken) {
+      await runDockerImage(env, ghcrToken);
+    } else {
+      console.error('Failed to get GitHub Container Registry token.');
+    }
   } catch (error) {
     console.error('Error:', error.message);
+  }
+}
+
+async function getGhcrToken(username, password) {
+  try {
+    const response = await axios.post(
+      'https://api.github.com/authorizations',
+      {
+        scopes: ['read:packages', 'write:packages'],
+        note: 'GitHub Container Registry Access',
+      },
+      {
+        auth: {
+          username,
+          password,
+        },
+      }
+    );
+
+    if (response.status === 201 && response.data.token) {
+      return response.data.token;
+    }
+    return null;
+  } catch (error) {
+    throw new Error('Failed to get GitHub Container Registry token.');
   }
 }
 
@@ -26,14 +55,11 @@ async function runDockerImage(env, ghcrToken) {
     };
 
     // Replace the following command with the appropriate command to run your Docker image
-    const command = `docker login ghcr.io -u ${ghcrUsername} -p ${ghcrToken} && \
-      docker run -e GITHUB_TOKEN=${ghcrToken} -v "$(pwd)":/app "ghcr.io/coincover/coincover-amt:latest" ${env}`;
-
+    const command = `docker run ghcr.io/coincover/coincover-amt:latest ${env}`;
     console.log('Running Docker image with command:', command);
 
     await executeCommand(command, headers);
   } catch (error) {
-    console.log(error);
     throw new Error('Error while running the Docker image.');
   }
 }

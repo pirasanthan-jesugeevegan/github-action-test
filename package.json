@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-   
+    "dockerode": "^3.3.5",
     "playwright-core": "^1.36.2"
   },
   "devDependencies": {
