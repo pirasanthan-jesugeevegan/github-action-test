@@ -12,22 +12,23 @@ async function run() {
       return;
     }
 
-    await runDockerImage(env, ghcrToken);
+    await runDockerImage(env, ghcrUsername, ghcrToken);
   } catch (error) {
     console.error('Error:', error.message);
   }
 }
 
-async function runDockerImage(env, ghcrToken) {
+async function runDockerImage(env, ghcrUsername, ghcrToken) {
   try {
     const headers = {
       Authorization: `Bearer ${ghcrToken}`,
     };
 
     // Replace the following command with the appropriate command to run your Docker image
-    const command = `docker login ghcr.io -u ${ghcrUsername} -p ${ghcrToken} && \
-      docker run -e GITHUB_TOKEN=${ghcrToken} -v "$(pwd)":/app "ghcr.io/coincover/coincover-amt:latest" ${env}`;
+    const loginCommand = `echo ${ghcrToken} | docker login ghcr.io -u ${ghcrUsername} -p ${ghcrToken}`;
+    const runCommand = `docker run -e GITHUB_TOKEN=${ghcrToken} -v "$(pwd)":/app "ghcr.io/coincover/coincover-amt:latest" ${env} --type api --product demo`;
 
+    const command = `${loginCommand} && ${runCommand}`;
     console.log('Running Docker image with command:', command);
 
     await executeCommand(command, headers);
