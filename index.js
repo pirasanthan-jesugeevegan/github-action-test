@@ -1,48 +1,19 @@
 const axios = require('axios');
-//
+
 async function run() {
   try {
     const env = process.env.INPUT_ENV || 'dev';
     const ghcrUsername = process.env.INPUT_USERNAME || '';
-    const ghcrPassword = process.env.INPUT_PASSWORD || '';
+    const ghcrToken = process.env.INPUT_PASSWORD || '';
 
-    if (!ghcrUsername || !ghcrPassword) {
+    if (!ghcrUsername || !ghcrToken) {
       console.error('Error: GitHub Container Registry credentials are missing.');
       return;
     }
 
-    const ghcrToken = await getGhcrToken(ghcrUsername, ghcrPassword);
-    if (ghcrToken) {
-      await runDockerImage(env, ghcrToken);
-    } else {
-      console.error('Failed to get GitHub Container Registry token.');
-    }
+    await runDockerImage(env, ghcrToken);
   } catch (error) {
     console.error('Error:', error.message);
-  }
-}
-
-async function getGhcrToken(username, password) {
-  try {
-    const response = await axios.post(
-      'https://api.github.com/authorizations',
-      {
-        scopes: ['read:packages', 'write:packages'],
-        note: 'GitHub Container Registry Access',
-      },
-      {
-        auth: {
-          username,
-          password,
-        },
-      }
-    );
-    if (response.status === 201 && response.data.token) {
-      return response.data.token;
-    }
-    return null;
-  } catch (error) {
-    throw new Error('Failed to get GitHub Container Registry token.');
   }
 }
 
@@ -53,11 +24,18 @@ async function runDockerImage(env, ghcrToken) {
     };
 
     // Replace the following command with the appropriate command to run your Docker image
-    const command = `docker run ghcr.io/coincover/coincover-amt:latest ${env}`;
+ 
+    const command = `docker run \
+    -e GITHUB_TOKEN=${ghcrToken} \
+    -e USER_NAME='pirasanthan-jesugeevegan' \
+    -v "$(pwd)":/app \
+    "ghcr.io/coincover/coincover-amt:latest" ${env}
+`
     console.log('Running Docker image with command:', command);
 
     await executeCommand(command, headers);
   } catch (error) {
+    console.log(error);
     throw new Error('Error while running the Docker image.');
   }
 }
