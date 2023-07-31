@@ -31,7 +31,8 @@ async function runDockerImage(env, ghcrUsername, ghcrToken) {
     const command = `${loginCommand} && ${runCommand}`;
     console.log('Running Docker image with command:', command);
 
-    await executeCommand(command, headers);
+    await executeCommand(loginCommand, headers);
+    await executeCommand(runCommand, headers);
   } catch (error) {
     console.log(error);
     throw new Error('Error while running the Docker image.');
