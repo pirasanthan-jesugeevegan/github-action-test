@@ -24,17 +24,11 @@ async function runDockerImage(env, ghcrToken) {
     };
 
     // Replace the following command with the appropriate command to run your Docker image
- 
-    const command = `docker run \
-    -e GITHUB_TOKEN=${ghcrToken} \
-    -e USER_NAME='pirasanthan-jesugeevegan' \
-    -v "$(pwd)":/app \
-    "ghcr.io/coincover/coincover-amt:latest" ${env}
-`
+    const command = `docker login ghcr.io -u ${ghcrUsername} -p ${ghcrToken} && \
+      docker run -e GITHUB_TOKEN=${ghcrToken} -v "$(pwd)":/app "ghcr.io/coincover/coincover-amt:latest" ${env}`;
+
     console.log('Running Docker image with command:', command);
-    const { stdout, stderr } = await executeCommand(command, headers);
-    console.log('Docker output:', stdout);
-    console.error('Docker errors:', stderr);
+
     await executeCommand(command, headers);
   } catch (error) {
     console.log(error);
