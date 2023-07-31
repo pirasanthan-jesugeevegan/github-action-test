@@ -37,7 +37,6 @@ async function getGhcrToken(username, password) {
         },
       }
     );
-
     if (response.status === 201 && response.data.token) {
       return response.data.token;
     }

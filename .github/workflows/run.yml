@@ -12,7 +12,7 @@ jobs:
         run: npm install 
 
       - name: RUN TEST
-        uses: pirasanthan-jesugeevegan/github-action-test@master
+        uses: ./
         with:
           env: '-- env dev --type api --product demo'
           username: ${{ github.actor }}
