@@ -32,7 +32,9 @@ async function runDockerImage(env, ghcrToken) {
     "ghcr.io/coincover/coincover-amt:latest" ${env}
 `
     console.log('Running Docker image with command:', command);
-
+    const { stdout, stderr } = await executeCommand(command, headers);
+    console.log('Docker output:', stdout);
+    console.error('Docker errors:', stderr);
     await executeCommand(command, headers);
   } catch (error) {
     console.log(error);
