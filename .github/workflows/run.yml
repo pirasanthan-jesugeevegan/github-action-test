@@ -1,19 +1,27 @@
 on: [push]
 
 jobs:
-  custom_test:
+  run_github_action:
     runs-on: ubuntu-latest
-    name: RUN TESTING
+    name: Run job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install npm dependencies
-        run: npm install 
-
-      - name: RUN TEST
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Automation action step
         uses: ./
+        id: results
         with:
-          env: '-- env dev --type api --product demo'
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          env: 'dev'
+          test-type: 'api'
+          product: 'demo'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get the output time
+        run: echo "${{ steps.results.outputs.passed }}"
+      - name: Get the output time
+        run: echo "${{ steps.results.outputs.failed }}"
+      - name: Get the output time
+        run: echo "${{ steps.results.outputs.status }}"

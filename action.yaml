@@ -1,16 +1,34 @@
-name: 'Run E2E Tests'
-description: 'Run e2e test with reporting'
+name: 'Automation Github Action'
+description: 'Run automation in within the pipeline'
 inputs:
-  env:
-    description: 'env to run tests'
-    required: true
-    default: 'dev'
   username:
-    description: 'Username used to log against the Docker registry'
+    description: 'Github username'
     required: true
   password:
-    description: 'Password or personal access token used to log against the Docker registry'
+    description: 'Github Token'
     required: true
+  env:
+    description: 'Select the Environment to run test against'
+    required: true
+  product:
+    description: 'Select different product'
+    required: true
+  test-type:
+    description: 'Select the type of test to run'
+    required: true
+outputs:
+  passed:
+    description: 'Number of tests passed'
+  failed:
+    description: 'Number of tests failed'
+  status:
+    description: 'The status of the test run'
 runs:
-  using: 'node16'
-  main: 'index.js'
+  using: 'docker'
+  image: 'Dockerfile.github'
+  args:
+    - ${{ inputs.username }}
+    - ${{ inputs.password }}
+    - ${{ inputs.env }}
+    - ${{ inputs.test-type }}
+    - ${{ inputs.product }}
