@@ -7,7 +7,6 @@ docker pull ghcr.io/coincover/coincover-amt:latest
 docker run \
   -e GITHUB_TOKEN=$2 \
   -e USER_NAME=$1 \
-  -v "$(pwd)":/app \
   "ghcr.io/coincover/coincover-amt:latest" --env $3 --type $4 --product $5 --file demo
 
 # Find the container ID of the last executed container (assuming it's the only one)
