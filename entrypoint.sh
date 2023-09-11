@@ -1,6 +1,6 @@
 #!/bin/sh -l
 
-echo $2 | docker login ghcr.io -u pirasanthan-jesugeevegan --password-stdin
+echo $2 | docker login ghcr.io -u $1 --password-stdin
 # Build image with current revision, caching from latest
 docker pull ghcr.io/coincover/coincover-amt:latest
 
